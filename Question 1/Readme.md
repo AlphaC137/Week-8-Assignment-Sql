@@ -1,6 +1,6 @@
 # Library Management System
 
-![Library Management System Database Diagram](https://i.imgur.com/PLACEHOLDER.png)
+![Library Management System Database Diagram](/Untitled.png)
 
 ## Overview
 This project implements a comprehensive Library Management System using MySQL. The system is designed to manage all aspects of a library's operations, including book catalog management, member management, loans, reservations, and fine payments.
