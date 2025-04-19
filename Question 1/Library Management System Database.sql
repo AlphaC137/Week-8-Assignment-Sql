@@ -1,7 +1,3 @@
--- Drop database if it already exists (for clean setup)
-DROP DATABASE IF EXISTS library_management;
-
--- Create database
 CREATE DATABASE library_management;
 USE library_management;
 
@@ -147,7 +143,7 @@ CREATE TABLE FinePayments (
     FOREIGN KEY (staff_id) REFERENCES Staff(staff_id) ON DELETE SET NULL
 );
 
--- Insert Members
+-- Members
 INSERT INTO Members (first_name, last_name, email, phone, address, membership_date, membership_status, date_of_birth)
 VALUES 
 ('John', 'Smith', 'john.smith@email.com', '555-123-4567', '123 Main St, Anytown', '2023-01-15', 'Active', '1985-06-12'),
@@ -156,7 +152,7 @@ VALUES
 ('Sarah', 'Brown', 'sarah.b@email.com', '555-456-7890', '101 Elm St, Somewhere', '2023-01-05', 'Expired', '1990-04-18'),
 ('David', 'Jones', 'david.j@email.com', '555-567-8901', '202 Maple Dr, Nowhere', '2023-04-25', 'Active', '1982-07-22');
 
--- Insert Authors
+-- Authors
 INSERT INTO Authors (first_name, last_name, birth_year, death_year, biography)
 VALUES 
 ('Jane', 'Austen', 1775, 1817, 'English novelist known for works of romantic fiction'),
@@ -165,7 +161,7 @@ VALUES
 ('Ernest', 'Hemingway', 1899, 1961, 'American novelist and short story writer'),
 ('Agatha', 'Christie', 1890, 1976, 'English writer known for detective novels');
 
--- Insert Publishers
+-- Publishers
 INSERT INTO Publishers (name, address, phone, email, website)
 VALUES 
 ('Penguin Random House', '1745 Broadway, New York, NY', '212-782-9000', 'info@penguinrandomhouse.com', 'www.penguinrandomhouse.com'),
@@ -174,7 +170,7 @@ VALUES
 ('Scholastic', '557 Broadway, New York, NY', '212-343-6100', 'info@scholastic.com', 'www.scholastic.com'),
 ('Oxford University Press', 'Great Clarendon St, Oxford, UK', '+44-1865-353535', 'info@oup.com', 'www.oup.com');
 
--- Insert Categories
+-- Categories
 INSERT INTO Categories (name, parent_category_id, description)
 VALUES 
 ('Fiction', NULL, 'Literary works created from the imagination'),
@@ -186,7 +182,7 @@ VALUES
 ('Fantasy', 1, 'Fiction with supernatural elements'),
 ('Romance', 1, 'Fiction focusing on relationship and romantic love');
 
--- Insert Books
+-- Books
 INSERT INTO Books (isbn, title, publisher_id, publication_year, edition, language, pages, description)
 VALUES 
 ('9780141439518', 'Pride and Prejudice', 1, 1813, 'Revised', 'English', 432, 'A romantic novel of manners'),
@@ -195,7 +191,7 @@ VALUES
 ('9780684801223', 'The Old Man and the Sea', 3, 1952, 'Standard', 'English', 127, 'A short novel about an aging Cuban fisherman'),
 ('9780062073488', 'Murder on the Orient Express', 2, 1934, 'Reprint', 'English', 256, 'A detective novel featuring Hercule Poirot');
 
--- Insert Book_Authors
+-- Book_Authors
 INSERT INTO Book_Authors (book_id, author_id, role)
 VALUES 
 (1, 1, 'Primary'),
@@ -204,7 +200,7 @@ VALUES
 (4, 4, 'Primary'),
 (5, 5, 'Primary');
 
--- Insert Book_Categories
+-- Book_Categories
 INSERT INTO Book_Categories (book_id, category_id)
 VALUES 
 (1, 1), -- Pride and Prejudice - Fiction
@@ -217,7 +213,7 @@ VALUES
 (5, 1), -- Murder on the Orient Express - Fiction
 (5, 4); -- Murder on the Orient Express - Mystery
 
--- Insert BookItems (multiple copies of some books)
+-- BookItems
 INSERT INTO BookItems (book_id, barcode, location, acquisition_date, status, condition_note)
 VALUES 
 (1, 'LIB-B001-001', 'Floor 1, Section A, Shelf 3', '2023-01-10', 'Available', 'Good condition'),
@@ -229,7 +225,7 @@ VALUES
 (4, 'LIB-B004-001', 'Floor 1, Section D, Shelf 4', '2023-02-10', 'Available', 'Pages slightly yellowed'),
 (5, 'LIB-B005-001', 'Floor 1, Section B, Shelf 5', '2023-03-05', 'Under Repair', 'Damaged spine');
 
--- Insert Staff
+-- Staff
 INSERT INTO Staff (first_name, last_name, email, phone, role, hire_date, salary)
 VALUES
 ('Robert', 'Anderson', 'robert.a@library.com', '555-901-2345', 'Librarian', '2020-06-15', 52000.00),
@@ -237,7 +233,7 @@ VALUES
 ('James', 'Wilson', 'james.w@library.com', '555-456-1230', 'Admin', '2019-11-22', 48000.00),
 ('Patricia', 'Martinez', 'patricia.m@library.com', '555-789-4560', 'IT Support', '2022-01-17', 46000.00);
 
--- Insert Loans
+-- Loans
 INSERT INTO Loans (item_id, member_id, loan_date, due_date, return_date, fine_amount)
 VALUES
 (2, 1, '2023-04-01', '2023-04-15', NULL, 0.00),
@@ -246,7 +242,7 @@ VALUES
 (1, 4, '2023-03-15', '2023-03-29', '2023-04-05', 3.50),
 (3, 5, '2023-04-10', '2023-04-24', NULL, 0.00);
 
--- Insert Reservations
+-- Reservations
 INSERT INTO Reservations (book_id, member_id, reservation_date, expiry_date, status)
 VALUES
 (3, 1, '2023-04-08 10:15:00', '2023-04-15 10:15:00', 'Pending'),
@@ -254,7 +250,7 @@ VALUES
 (2, 4, '2023-03-25 11:45:00', '2023-04-01 11:45:00', 'Expired'),
 (1, 2, '2023-04-10 16:20:00', '2023-04-17 16:20:00', 'Pending');
 
--- Insert FinePayments
+-- FinePayments
 INSERT INTO FinePayments (loan_id, payment_date, amount, payment_method, staff_id)
 VALUES
 (4, '2023-04-05 15:30:00', 3.50, 'Cash', 2);
