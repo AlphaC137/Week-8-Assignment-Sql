@@ -89,17 +89,8 @@ Replace `<username>` with your MySQL username and `<database_name>` with the nam
 - Records payments for overdue fines.
 - Includes fields like `loan_id`, `payment_date`, `amount`, `payment_method`, and `staff_id`.
 
-## Notes
-- The script includes constraints to ensure data integrity, such as foreign keys, unique constraints, and check constraints.
-- Sample data is provided for testing purposes and can be modified as needed.
-
-## Troubleshooting
-- Ensure that the MySQL server is running before executing the script.
-- Check for any syntax errors or missing privileges if the script fails to execute.
-- Verify that the MySQL user has sufficient privileges to create databases and tables.
-
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is an assignment from Power Learn Project assignment. This was made for educational purposes.
 
 ## Contributors
 - Sydwell Lebeloane
