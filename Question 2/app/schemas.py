@@ -1,17 +1,17 @@
-from pydantic import BaseModel, EmailStr, constr, Field
+from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, List
 from datetime import datetime
 
 # User schemas
 class UserBase(BaseModel):
-    username: constr(min_length=3, max_length=50)
+    username: str = Field(..., min_length=3, max_length=50)
     email: EmailStr
 
 class UserCreate(UserBase):
     pass
 
 class UserUpdate(BaseModel):
-    username: Optional[constr(min_length=3, max_length=50)] = None
+    username: Optional[str] = Field(None, min_length=3, max_length=50)
     email: Optional[EmailStr] = None
     is_active: Optional[bool] = None
 
@@ -26,14 +26,14 @@ class UserOut(UserBase):
 
 # Category schemas
 class CategoryBase(BaseModel):
-    name: constr(min_length=3, max_length=100)
+    name: str = Field(..., min_length=3, max_length=100)
     description: Optional[str] = None
 
 class CategoryCreate(CategoryBase):
     pass
 
 class CategoryUpdate(BaseModel):
-    name: Optional[constr(min_length=3, max_length=100)] = None
+    name: Optional[str] = Field(None, min_length=3, max_length=100)
     description: Optional[str] = None
 
 class Category(CategoryBase):
@@ -46,7 +46,7 @@ class Category(CategoryBase):
 
 # Task schemas
 class TaskBase(BaseModel):
-    title: constr(min_length=3, max_length=100)
+    title: str = Field(..., min_length=3, max_length=100)
     description: Optional[str] = None
     is_completed: Optional[bool] = False
 
@@ -55,7 +55,7 @@ class TaskCreate(TaskBase):
     category_id: Optional[int] = None
 
 class TaskUpdate(BaseModel):
-    title: Optional[constr(min_length=3, max_length=100)] = None
+    title: Optional[str] = Field(None, min_length=3, max_length=100)
     description: Optional[str] = None
     is_completed: Optional[bool] = None
     category_id: Optional[int] = None
