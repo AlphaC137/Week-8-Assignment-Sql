@@ -1,106 +1,102 @@
-# Library Management System
-
-![Library Management System Database Diagram](Untitled.png)
+# Library Management System Database
 
 ## Overview
-This project implements a comprehensive Library Management System using MySQL. The system is designed to manage all aspects of a library's operations, including book catalog management, member management, loans, reservations, and fine payments.
+This SQL script creates and populates a database for a Library Management System. The database is designed to manage various aspects of a library, including members, books, authors, publishers, loans, reservations, and staff. It also includes data integrity constraints and sample data for testing purposes.
 
-## Database Structure
-The database consists of the following tables:
-
-### Core Entities
-- **Members**: Stores information about library members
-- **Books**: Contains the main catalog of books
-- **Authors**: Information about book authors
-- **Publishers**: Details of book publishers
-- **Categories**: Hierarchical book categories
-- **BookItems**: Physical copies of books available in the library
-- **Staff**: Library employees information
-
-### Relationship Tables
-- **Book_Authors**: Connects books with their authors (many-to-many)
-- **Book_Categories**: Links books to their categories (many-to-many)
-
-### Transaction Tables
-- **Loans**: Records of books borrowed by members
-- **Reservations**: Requests to borrow books that are currently unavailable
-- **FinePayments**: Records of payments for overdue books
+## Power Learn Project
+This project is part of the "Power Learn Project" assignment for Week 8 Database.
 
 ## Features
-- **Member Management**: Register, update and track member information
-- **Book Catalog**: Comprehensive book catalog with details like author, publisher, category
-- **Multiple Copies**: Track individual copies of the same book
-- **Hierarchical Categories**: Support for main categories and subcategories
-- **Loan Management**: Track borrowing history, due dates, and returns
-- **Reservation System**: Allow members to reserve books that are currently unavailable
-- **Fine Management**: Calculate, track, and collect fines for overdue books
-- **Staff Management**: Manage library staff information and roles
+- **Members Management**: Tracks library members, their contact details, membership status, and other relevant information.
+- **Books and Authors**: Manages books, their authors, categories, and publishers.
+- **Loans and Reservations**: Handles book loans, due dates, fines, and reservations.
+- **Staff Management**: Maintains staff details and their roles.
+- **Fine Payments**: Records payments made for overdue fines.
 
-## Relationships
-- A book can have multiple authors (and vice versa)
-- A book can belong to multiple categories
-- A category can have subcategories
-- A book can have multiple physical copies (book items)
-- A member can borrow multiple books
-- A member can make multiple reservations
-- Loans that incur fines can have payment records
+## Prerequisites
+- A MySQL database server installed and running.
+- A MySQL client or any database management tool to execute the script.
 
-## Constraints
-The database implements various constraints to maintain data integrity:
-- Primary and foreign key constraints
-- Not null constraints for required fields
-- Unique constraints for fields like email, ISBN, barcode
-- Check constraints for logical validations (e.g., death year > birth year)
-- Enumerated types for fields with predefined values
+## How to Run the Script
+1. Open your MySQL client or database management tool.
+2. Copy the contents of the `Library Management System Database.sql` file.
+3. Paste the script into the SQL editor of your tool.
+4. Execute the script.
 
-## Sample Data
-The database includes sample data for all tables, providing examples of:
-- Library members with different membership statuses
-- Books from various genres with their authors and publishers
-- Multiple copies of books with different statuses
-- Active loans and reservations
-- Sample fine payments
-
-## Schema Visualization
-The database schema visualization was created using [dbdiagram.io](https://dbdiagram.io/), showing all tables and their relationships.
-
-## Getting Started
-
-### Prerequisites
-- MySQL Server 5.7 or higher
-
-### Installation
-1. Clone this repository
-2. Import the SQL file into your MySQL server:
-   ```
-   mysql -u username -p < library_management.sql
-   ```
-3. Verify the installation by checking the created tables:
-   ```
-   mysql -u username -p -e "USE library_management; SHOW TABLES;"
-   ```
-
-## Usage Examples
-
-### Find available books
-```sql
-SELECT b.title, b.isbn, COUNT(bi.item_id) AS available_copies
-FROM Books b
-JOIN BookItems bi ON b.book_id = bi.book_id
-WHERE bi.status = 'Available'
-GROUP BY b.book_id;
+Alternatively, you can run the script directly from the command line:
+```bash
+mysql -u <username> -p < database_name> < Library Management System Database.sql
 ```
+Replace `<username>` with your MySQL username and `<database_name>` with the name of the database you want to create.
 
-### Check overdue loans
-```sql
-SELECT m.first_name, m.last_name, b.title, l.due_date, 
-       DATEDIFF(CURRENT_DATE, l.due_date) AS days_overdue
-FROM Loans l
-JOIN Members m ON l.member_id = m.member_id
-JOIN BookItems bi ON l.item_id = bi.item_id
-JOIN Books b ON bi.book_id = b.book_id
-WHERE l.return_date IS NULL AND l.due_date < CURRENT_DATE;
-```
+## What the Script Does
+1. **Database Creation**:
+   - Creates a new database named `library_management` and switches to it.
+
+2. **Table Creation**:
+   - Creates tables for members, authors, publishers, categories, books, book items, loans, reservations, staff, and fine payments.
+   - Includes constraints like primary keys, foreign keys, and checks to ensure data integrity.
+
+3. **Sample Data Insertion**:
+   - Populates the tables with sample data for testing and demonstration purposes.
+
+## Table Details
+### Members
+- Tracks library members and their details.
+- Includes fields like `first_name`, `last_name`, `email`, `phone`, `address`, `membership_date`, `membership_status`, and `date_of_birth`.
+
+### Authors
+- Stores information about book authors.
+- Includes fields like `first_name`, `last_name`, `birth_year`, `death_year`, and `biography`.
+
+### Publishers
+- Manages publisher details.
+- Includes fields like `name`, `address`, `phone`, `email`, and `website`.
+
+### Categories
+- Organizes books into categories and subcategories.
+- Includes fields like `name`, `parent_category_id`, and `description`.
+
+### Books
+- Stores book details.
+- Includes fields like `isbn`, `title`, `publisher_id`, `publication_year`, `edition`, `language`, `pages`, and `description`.
+
+### Book_Authors
+- Links books to their authors.
+- Includes fields like `book_id`, `author_id`, and `role`.
+
+### Book_Categories
+- Links books to their categories.
+- Includes fields like `book_id` and `category_id`.
+
+### BookItems
+- Tracks individual copies of books.
+- Includes fields like `barcode`, `location`, `acquisition_date`, `status`, and `condition_note`.
+
+### Loans
+- Manages book loans.
+- Includes fields like `item_id`, `member_id`, `loan_date`, `due_date`, `return_date`, and `fine_amount`.
+
+### Reservations
+- Handles book reservations.
+- Includes fields like `book_id`, `member_id`, `reservation_date`, `expiry_date`, and `status`.
+
+### Staff
+- Stores staff details.
+- Includes fields like `first_name`, `last_name`, `email`, `phone`, `role`, `hire_date`, and `salary`.
+
+### FinePayments
+- Records payments for overdue fines.
+- Includes fields like `loan_id`, `payment_date`, `amount`, `payment_method`, and `staff_id`.
+
+## Notes
+- The script includes constraints to ensure data integrity, such as foreign keys, unique constraints, and check constraints.
+- Sample data is provided for testing purposes and can be modified as needed.
+
+## Troubleshooting
+- Ensure that the MySQL server is running before executing the script.
+- Check for any syntax errors or missing privileges if the script fails to execute.
+- Verify that the MySQL user has sufficient privileges to create databases and tables.
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
